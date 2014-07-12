@@ -194,7 +194,7 @@ class Command(pdu.PDU):
         if value:
             # We ought to return an octet string
             if isinstance(value, unicode):
-                value = value.decode('ascii')
+                value = value.encode('utf-8')
             return value
         else:
             return None  # chr(0)
@@ -250,7 +250,7 @@ class Command(pdu.PDU):
             #print binascii.b2a_hex(value)
         # We ought to return an octet string
         if isinstance(value, unicode):
-            value = value.decode('ascii')
+            value = value.encode('utf-8')
         return value
 
     def _pack_format(self, field):
