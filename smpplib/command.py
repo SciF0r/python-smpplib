@@ -192,6 +192,9 @@ class Command(pdu.PDU):
 
         value = getattr(self, field)
         if value:
+            # We ought to return an octet string
+            if isinstance(value, unicode):
+                value = value.decode('ascii')
             return value
         else:
             return None  # chr(0)
@@ -245,6 +248,9 @@ class Command(pdu.PDU):
             field_length = len(field_value)
             value = struct.pack(">HH", field_code, field_length) + field_value
             #print binascii.b2a_hex(value)
+        # We ought to return an octet string
+        if isinstance(value, unicode):
+            value = value.decode('ascii')
         return value
 
     def _pack_format(self, field):
