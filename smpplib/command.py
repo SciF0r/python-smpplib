@@ -122,34 +122,24 @@ class Command(pdu.PDU):
         body = ''
 
         for field in self.params_order:
-            #print field
             param = self.params[field]
-            #print param
+            value = ''
             if self.field_is_optional(field):
                 if param.type is int:
                     value = self._generate_int_tlv(field)
-                    if value:
-                        body += value
                 elif param.type is str:
                     value = self._generate_string_tlv(field)
-                    if value:
-                        body += value
                 elif param.type is ostr:
                     value = self._generate_ostring_tlv(field)
-                    if value:
-                        body += value
             else:
                 if param.type is int:
                     value = self._generate_int(field)
-                    body += value
                 elif param.type is str:
                     value = self._generate_string(field)
-                    body += value
                 elif param.type is ostr:
                     value = self._generate_ostring(field)
-                    if value:
-                        body += value
-            #print value
+            if value:
+                body += value
         return body
 
     def _generate_opt_header(self, field):
