@@ -278,7 +278,7 @@ class Client(object):
                 else:
                     raise
 
-    def send_message(self, **kwargs):
+    def send_message(self, already_encoded=False, **kwargs):
         """Send message
 
         Required Arguments:
@@ -290,5 +290,7 @@ class Client(object):
         """
 
         ssm = smpp.make_pdu('submit_sm', client=self, **kwargs)
+        if already_encoded:
+            ssm.short_message = kwargs.get('short_message')
         self.send_pdu(ssm)
         return ssm
